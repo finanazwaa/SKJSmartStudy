@@ -1,0 +1,7 @@
+{
+	"notifications": true,
+	"sound": false,
+	"show_allowed": true,
+	"log_path": "logs/alerts.log",
+	"blocklist": "blocklist.txt"
+}
