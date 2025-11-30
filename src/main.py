@@ -136,9 +136,9 @@ def display_summary(summary):
     """
     Updates the summary text box in the GUI with the given summary.
     """
-    print("display_summary called")  # Debugging statement
-    summary_text.config(state="normal")  # Enable editing in the text box
-    summary_text.delete(1.0, tk.END)  # Clear previous content
+    print("display_summary called")  
+    summary_text.config(state="normal")  
+    summary_text.delete(1.0, tk.END)  
     summary_text.insert(tk.END, summary)  # Insert the new summary
     summary_text.config(state="disabled")  # Disable editing againext box
     summary_text.delete(1.0, tk.END)  # Clear previous content
