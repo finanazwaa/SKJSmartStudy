@@ -1,0 +1,5 @@
+----- DAILY SUMMARY -----
+Total domains scanned: 15
+Blocked: 5
+Most blocked: youtube.com
+-------------------------
