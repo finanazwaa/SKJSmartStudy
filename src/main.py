@@ -1,16 +1,15 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
-import os
 import threading
-import time
 from datetime import datetime, timedelta
+import os
+import time
 import json
 from blocklist_loader import load_blocklist
 from detection_module import is_blocked
 from logging_system import log_alert
 from notification_system import notify
 from capture_domain import get_domains
-
 
 # Load configuration from config.json
 config = json.load(open("config.json"))
@@ -57,9 +56,8 @@ def stop_monitoring():
     messagebox.showinfo("Info", "Monitoring stopped!")
 
 def monitor_domains():
-    """
-    Monitors domains until the timer ends or monitoring is stopped.
-    """
+    global monitoring, end_time  # <-- FIX HERE
+
     blocklist = load_blocklist(config["blocklist"])  # Load the blocklist once
     domains = get_domains()[:100]  # Limit to the first 100 domains
     print(f"Domains to process: {domains}")  # Debugging statement
@@ -78,19 +76,16 @@ def monitor_domains():
     monitoring = False
 
 def update_progress_bar(value):
+    """Updates progress bar in GUI"""
     progress_bar["value"] = value
-    """
-    Updates the stats section in the GUI.
-    """
-    total_label.config(text=f"Total Domains Scanned: {stats['total']}")
-    blocked_label.config(text=f"Blocked Domains: {stats['blocked']}")
+
 def update_stats():
     """
     Updates the stats section in the GUI.
     """
     total_label.config(text=f"Total Domains Scanned: {stats['total']}")
     blocked_label.config(text=f"Blocked Domains: {stats['blocked']}")
-    progress_bar["value"] = (stats["total"] / 100) * 100  # Example progress calculation
+    progress_bar["value"] = min(stats["total"], 100)  # Fixed progress calculation
 
 def view_logs():
     """
@@ -170,7 +165,7 @@ title_label.pack(pady=10)
 input_frame = tk.Frame(root, bg="#f0f0f0")
 input_frame.pack(pady=10)
 
-tk.Label(input_frame, text="Enter duration (minutes):", font=("Arial", 12), bg="#000000").grid(row=0, column=0, padx=5)
+tk.Label(input_frame, text="Enter duration (minutes):", font=("Arial", 12), bg="#f0f0f0").grid(row=0, column=0, padx=5)
 duration_entry = tk.Entry(input_frame, font=("Arial", 12), justify="center")
 duration_entry.grid(row=0, column=1, padx=5)
 
